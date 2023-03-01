@@ -19,17 +19,17 @@ import java.util.function.Function;
 
 @Component
 public class JwtUtils {
-    private String jwtSigningKey = "secret";
+    private static String jwtSigningKey = "secret";
 
-    public String generateToken(UserDetails userDetails){
+    public static String generateToken(UserDetails userDetails){
         return createToken(new HashMap<>(), userDetails);
     }
 
-    public String generateToken(Map<String, Object> map ,UserDetails userDetails){
+    public static String generateToken(Map<String, Object> map ,UserDetails userDetails){
         return createToken(map, userDetails);
     }
 
-    public String createToken(Map<String, Object> claims, UserDetails userDetails) {
+    public static String createToken(Map<String, Object> claims, UserDetails userDetails) {
         return Jwts.builder()
                 .setClaims(claims)
                 .setSubject(userDetails.getUsername())
@@ -40,28 +40,28 @@ public class JwtUtils {
                 .compact();
     }
 
-    public String extractSub(String token) {
+    public static String extractSub(String token) {
         return extractClaim(token, Claims::getSubject);
     }
 
-    public Date extractExpiration(String token) {
+    public static Date extractExpiration(String token) {
         return extractClaim(token, Claims::getExpiration);
     }
 
-    public <T> T extractClaim(String token, Function<Claims, T> function) {
+    public static <T> T extractClaim(String token, Function<Claims, T> function) {
         Claims claims = extractAllClaims(token);
         return function.apply(claims);
     }
 
-    public Claims extractAllClaims(String token) {
+    public static Claims extractAllClaims(String token) {
         return Jwts.parser().setSigningKey(jwtSigningKey).parseClaimsJws(token).getBody();
     }
 
-    public Boolean isTokenExpired(String token) {
+    public static Boolean isTokenExpired(String token) {
         return extractExpiration(token).before(new Date());
     }
 
-    public Boolean isTokenValid(String token, UserDetails userDetails) {
+    public static Boolean isTokenValid(String token, UserDetails userDetails) {
         String username = extractSub(token);
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
