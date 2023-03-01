@@ -12,6 +12,7 @@ import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.time.Instant;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
@@ -19,6 +20,25 @@ import java.util.function.Function;
 @Component
 public class JwtUtils {
     private String jwtSigningKey = "secret";
+
+    public String generateToken(UserDetails userDetails){
+        return createToken(new HashMap<>(), userDetails);
+    }
+
+    public String generateToken(Map<String, Object> map ,UserDetails userDetails){
+        return createToken(map, userDetails);
+    }
+
+    public String createToken(Map<String, Object> claims, UserDetails userDetails) {
+        return Jwts.builder()
+                .setClaims(claims)
+                .setSubject(userDetails.getUsername())
+                .claim("authorities", userDetails.getAuthorities())
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + TimeUnit.HOURS.toMillis(24)))
+                .signWith(SignatureAlgorithm.HS256, jwtSigningKey)
+                .compact();
+    }
 
     public String extractSub(String token) {
         return extractClaim(token, Claims::getSubject);
@@ -37,16 +57,13 @@ public class JwtUtils {
         return Jwts.parser().setSigningKey(jwtSigningKey).parseClaimsJws(token).getBody();
     }
 
-    public String createToken(Map<String, Object> claims, UserDetails userDetails) {
-        return Jwts.builder()
-                .setClaims(claims)
-                .setSubject(userDetails.getUsername())
-                .claim("authorities", userDetails.getAuthorities())
-                .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + TimeUnit.HOURS.toMillis(24)))
-                .signWith(SignatureAlgorithm.HS256, jwtSigningKey)
-                .compact();
+    public Boolean isTokenExpired(String token) {
+        return extractExpiration(token).before(new Date());
     }
 
+    public Boolean isTokenValid(String token, UserDetails userDetails) {
+        String username = extractSub(token);
+        return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
+    }
 
 }
