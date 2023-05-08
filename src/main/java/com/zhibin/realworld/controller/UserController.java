@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import static org.springframework.http.HttpStatus.CREATED;
+
 @RequestMapping("/api/users")
 @RestController
 @RequiredArgsConstructor
@@ -31,6 +33,7 @@ public class UserController {
         return new LoginResponse(new LoginResponse.Attributes("adminEmail", "admin"));
     }
 
+    @ResponseStatus(CREATED)
     @PostMapping()
     public RegisterResponse register(@RequestBody RegisterRequest request){
         return registerService.register(request);
