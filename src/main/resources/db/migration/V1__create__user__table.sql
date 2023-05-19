@@ -1,0 +1,6 @@
+CREATE TABLE IF NOT EXISTS users (
+    email VARCHAR(45) NOT NULL PRIMARY KEY,
+    username VARCHAR(45) NOT NULL,
+    bio VARCHAR(80),
+    image VARCHAR(80) DEFAULT NULL
+    );
