@@ -6,6 +6,7 @@ import com.zhibin.realworld.controller.request.RegisterRequest;
 import com.zhibin.realworld.controller.response.LoginResponse;
 import com.zhibin.realworld.controller.response.RegisterResponse;
 import com.zhibin.realworld.domain.User;
+import com.zhibin.realworld.domain.UserVO;
 import com.zhibin.realworld.service.LoginService;
 import com.zhibin.realworld.service.RegisterService;
 import lombok.RequiredArgsConstructor;
@@ -42,7 +43,7 @@ public class UserController {
     }
 
     @GetMapping("/user")
-    public User currentUser(HttpServletRequest request){
+    public UserVO currentUser(HttpServletRequest request){
         return loginService.getUserByEmail(request.getSession(false).getAttribute("email").toString());
     }
 }

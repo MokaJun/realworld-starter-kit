@@ -1,6 +1,8 @@
 package com.zhibin.realworld.service;
 
 import com.zhibin.realworld.controller.response.RegisterResponse;
+import com.zhibin.realworld.domain.UserMapper;
+import com.zhibin.realworld.domain.UserVO;
 import com.zhibin.realworld.exception.LoginException;
 import com.zhibin.realworld.domain.User;
 import com.zhibin.realworld.domain.UserRepository;
@@ -13,6 +15,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class LoginService {
 
+    private final UserMapper userMapper;
     private final UserRepository userRepository;
 
     public boolean validate(String email, String password) {
@@ -23,7 +26,7 @@ public class LoginService {
         return true;
     }
 
-    public User getUserByEmail(String email) {
-        return userRepository.findUserByEmail(email).orElseThrow();
+    public UserVO getUserByEmail(String email) {
+        return userMapper.userToUserVO(userRepository.findUserByEmail(email).orElseThrow(() -> new LoginException(888, "email not exist")));
     }
 }
