@@ -2,9 +2,9 @@ package com.zhibin.realworld.service;
 
 import com.zhibin.realworld.controller.request.RegisterRequest;
 import com.zhibin.realworld.controller.response.RegisterResponse;
-import com.zhibin.realworld.repositry.User;
+import com.zhibin.realworld.domain.User;
 import com.zhibin.realworld.exception.RegistrationException;
-import com.zhibin.realworld.repositry.UserRepository;
+import com.zhibin.realworld.domain.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

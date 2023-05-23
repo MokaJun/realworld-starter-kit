@@ -1,4 +1,4 @@
-package com.zhibin.realworld.repositry;
+package com.zhibin.realworld.domain;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

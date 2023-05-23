@@ -1,4 +1,4 @@
-package com.zhibin.realworld.repositry;
+package com.zhibin.realworld.domain;
 
 import lombok.*;
 
