@@ -5,10 +5,8 @@ import com.zhibin.realworld.controller.request.LoginRequest;
 import com.zhibin.realworld.controller.request.RegisterRequest;
 import com.zhibin.realworld.controller.response.LoginResponse;
 import com.zhibin.realworld.controller.response.RegisterResponse;
-import com.zhibin.realworld.domain.User;
 import com.zhibin.realworld.domain.UserVO;
-import com.zhibin.realworld.service.LoginService;
-import com.zhibin.realworld.service.RegisterService;
+import com.zhibin.realworld.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,14 +20,13 @@ import static org.springframework.http.HttpStatus.CREATED;
 @RequiredArgsConstructor
 public class UserController {
 
-    private final RegisterService registerService;
-    private final LoginService loginService;
+    private final UserService userService;
 
     @PostMapping("/users/login")
     public LoginResponse login(HttpServletRequest request, @RequestBody LoginRequest loginRequest){
         String email = loginRequest.getUser().getEmail();
         String password = loginRequest.getUser().getPassword();
-        if (loginService.validate(email, password)){
+        if (userService.validate(email, password)){
             HttpSession session = request.getSession(true);
             session.setAttribute("email",email);
         }
@@ -39,11 +36,11 @@ public class UserController {
     @ResponseStatus(CREATED)
     @PostMapping("/users")
     public RegisterResponse register(@RequestBody RegisterRequest request){
-        return registerService.register(request);
+        return userService.register(request);
     }
 
     @GetMapping("/user")
     public UserVO currentUser(HttpServletRequest request){
-        return loginService.getUserByEmail(request.getSession(false).getAttribute("email").toString());
+        return userService.getUserByEmail(request.getSession(false).getAttribute("email").toString());
     }
 }
