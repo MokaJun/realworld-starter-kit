@@ -1,7 +1,6 @@
-package com.zhibin.realworld.domain;
+package com.zhibin.realworld.domain.user;
 
 import org.mapstruct.Mapper;
-import org.mapstruct.factory.Mappers;
 
 @Mapper(componentModel = "spring")
 public interface UserMapper {

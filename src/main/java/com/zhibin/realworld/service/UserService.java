@@ -2,11 +2,11 @@ package com.zhibin.realworld.service;
 
 import com.zhibin.realworld.controller.request.RegisterRequest;
 import com.zhibin.realworld.controller.response.RegisterResponse;
-import com.zhibin.realworld.domain.UserMapper;
-import com.zhibin.realworld.domain.UserVO;
+import com.zhibin.realworld.domain.user.UserMapper;
+import com.zhibin.realworld.domain.user.UserVO;
 import com.zhibin.realworld.exception.LoginException;
-import com.zhibin.realworld.domain.User;
-import com.zhibin.realworld.domain.UserRepository;
+import com.zhibin.realworld.domain.user.User;
+import com.zhibin.realworld.domain.user.UserRepository;
 import com.zhibin.realworld.exception.RegistrationException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

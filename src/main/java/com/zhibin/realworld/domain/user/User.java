@@ -1,4 +1,4 @@
-package com.zhibin.realworld.domain;
+package com.zhibin.realworld.domain.user;
 
 import lombok.*;
 

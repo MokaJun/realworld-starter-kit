@@ -5,7 +5,7 @@ import com.zhibin.realworld.controller.request.LoginRequest;
 import com.zhibin.realworld.controller.request.RegisterRequest;
 import com.zhibin.realworld.controller.response.LoginResponse;
 import com.zhibin.realworld.controller.response.RegisterResponse;
-import com.zhibin.realworld.domain.UserVO;
+import com.zhibin.realworld.domain.user.UserVO;
 import com.zhibin.realworld.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
