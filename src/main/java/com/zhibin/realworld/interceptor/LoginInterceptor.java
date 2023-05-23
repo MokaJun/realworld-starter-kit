@@ -17,7 +17,7 @@ public class LoginInterceptor implements HandlerInterceptor {
                              Object handler) throws Exception {
         // 1.得到 HttpSession 对象
         HttpSession session = request.getSession(false);
-        if (session != null && session.getAttribute("userinfo") != null) {
+        if (session != null && session.getAttribute("email") != null) {
             // 表示已经登录
             return true;
         }
