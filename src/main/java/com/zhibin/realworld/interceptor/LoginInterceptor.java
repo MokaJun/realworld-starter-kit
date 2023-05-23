@@ -1,5 +1,6 @@
 package com.zhibin.realworld.interceptor;
 
+import com.zhibin.realworld.exception.LoginException;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
@@ -22,7 +23,8 @@ public class LoginInterceptor implements HandlerInterceptor {
         }
         // 执行到此代码表示未登录，未登录就跳转到登录页面
 //        response.sendRedirect("/login.html");
-        response.sendError(999,"you have not login, please login first");
-        return false;
+        throw new LoginException(999,"you have not login, please login first");
+//        response.sendError(999,"you have not login, please login first");
+//        return false;
     }
 }

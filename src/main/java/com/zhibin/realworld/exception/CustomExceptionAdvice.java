@@ -14,5 +14,9 @@ public class CustomExceptionAdvice {
         return new ErrorResponse(e.getErrorCode(), e.getMessage());
     }
 
-
+    @ExceptionHandler(LoginException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse handle(LoginException e){
+        return new ErrorResponse(e.getErrorCode(), e.getMessage());
+    }
 }
