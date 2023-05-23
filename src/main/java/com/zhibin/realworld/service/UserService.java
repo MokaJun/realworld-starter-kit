@@ -19,9 +19,9 @@ public class UserService {
     private final UserRepository userRepository;
 
     public RegisterResponse register(RegisterRequest request) {
-        String username = request.getUser().getUsername();
-        String email = request.getUser().getEmail();
-        String password = request.getUser().getPassword();
+        String username = request.getUsername();
+        String email = request.getEmail();
+        String password = request.getPassword();
         if (userRepository.existsUserByEmail(email)) {
             throw new RegistrationException("user already exist");
         }

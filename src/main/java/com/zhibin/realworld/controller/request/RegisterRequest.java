@@ -1,16 +1,13 @@
 package com.zhibin.realworld.controller.request;
 
+import com.fasterxml.jackson.annotation.JsonRootName;
 import lombok.Data;
 import lombok.Getter;
 
-@Data
+@JsonRootName("user")
+@Getter
 public class RegisterRequest {
-    private Attributes user;
-
-    @Getter
-    public static class Attributes {
-        public String username;
-        public String email;
-        public String password;
-    }
+    private String username;
+    private String email;
+    private String password;
 }

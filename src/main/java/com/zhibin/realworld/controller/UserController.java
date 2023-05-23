@@ -24,8 +24,8 @@ public class UserController {
 
     @PostMapping("/users/login")
     public LoginResponse login(HttpServletRequest request, @RequestBody LoginRequest loginRequest){
-        String email = loginRequest.getUser().getEmail();
-        String password = loginRequest.getUser().getPassword();
+        String email = loginRequest.getEmail();
+        String password = loginRequest.getPassword();
         if (userService.validate(email, password)){
             HttpSession session = request.getSession(true);
             session.setAttribute("email",email);
