@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 @AllArgsConstructor
+@Getter
 public class LoginResponse {
 
     private Attributes user;
