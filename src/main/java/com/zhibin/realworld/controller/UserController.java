@@ -5,6 +5,7 @@ import com.zhibin.realworld.controller.request.LoginRequest;
 import com.zhibin.realworld.controller.request.RegisterRequest;
 import com.zhibin.realworld.controller.response.LoginResponse;
 import com.zhibin.realworld.controller.response.RegisterResponse;
+import com.zhibin.realworld.service.LoginService;
 import com.zhibin.realworld.service.RegisterService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -20,16 +21,15 @@ import static org.springframework.http.HttpStatus.CREATED;
 public class UserController {
 
     private final RegisterService registerService;
+    private final LoginService loginService;
 
     @PostMapping("/login")
     public LoginResponse login(HttpServletRequest request, @RequestBody LoginRequest loginRequest){
-        String email = loginRequest.getUser().getEmail();
-        String password = loginRequest.getUser().getPassword();
-        if (email.equals("admin") && password.equals("password")){
+        if (loginService.validate(loginRequest)){
             HttpSession session = request.getSession(true);
             session.setAttribute("userinfo","userinfo");
         }
-        return new LoginResponse(new LoginResponse.Attributes("adminEmail", "admin"));
+        return new LoginResponse(new LoginResponse.Attributes(loginRequest.getUser().getEmail(), loginRequest.getUser().getPassword()));
     }
 
     @ResponseStatus(CREATED)
