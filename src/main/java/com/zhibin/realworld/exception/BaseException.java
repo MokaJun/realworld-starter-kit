@@ -9,6 +9,10 @@ public class BaseException extends RuntimeException{
 
     private int errorCode;
 
+    public BaseException(){
+        super();
+        this.errorCode = 1234;
+    }
 
     public BaseException(String message){
         super(message);
