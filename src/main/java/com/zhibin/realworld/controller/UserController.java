@@ -27,11 +27,11 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/users/login")
-    public LoginResponse login(HttpServletRequest request, @RequestBody LoginRequest loginRequest){
+    public LoginResponse login(HttpServletRequest servletRequest, @RequestBody LoginRequest loginRequest){
         String email = loginRequest.getEmail();
         String password = loginRequest.getPassword();
         UUID uuid = userService.validate(email, password);
-        HttpSession session = request.getSession(true);
+        HttpSession session = servletRequest.getSession(true);
         session.setAttribute("uuid",uuid);
         return new LoginResponse(new LoginResponse.Attributes(email, password));
     }
@@ -43,12 +43,17 @@ public class UserController {
     }
 
     @GetMapping("/user")
-    public UserVO currentUser(HttpServletRequest request){
-        return userService.getUserByEmail(request.getSession(false).getAttribute("email").toString());
+    public UserVO currentUser(HttpServletRequest servletRequest){
+        return userService.getUserByUUID(getUuidFromSession(servletRequest));
     }
 
     @PutMapping("/user")
-    public UserVO updateCurrentUser(User me, @RequestBody UpdateUserRequest request) {
-        return userService.update(request);
+    public UserVO updateCurrentUser(HttpServletRequest servletRequest, User me, @RequestBody UpdateUserRequest request) {
+        HttpSession session = servletRequest.getSession();
+        return userService.update((UUID) session.getAttribute("uuid") ,request);
+    }
+
+    private UUID getUuidFromSession(HttpServletRequest servletRequest) {
+        return (UUID) servletRequest.getSession(false).getAttribute("uuid");
     }
 }
