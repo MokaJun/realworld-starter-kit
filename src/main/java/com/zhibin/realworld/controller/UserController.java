@@ -6,6 +6,7 @@ import com.zhibin.realworld.controller.request.RegisterRequest;
 import com.zhibin.realworld.controller.request.UpdateUserRequest;
 import com.zhibin.realworld.controller.response.LoginResponse;
 import com.zhibin.realworld.controller.response.RegisterResponse;
+import com.zhibin.realworld.domain.user.ProfileVO;
 import com.zhibin.realworld.domain.user.User;
 import com.zhibin.realworld.domain.user.UserVO;
 import com.zhibin.realworld.service.UserService;
@@ -25,9 +26,10 @@ import static org.springframework.http.HttpStatus.CREATED;
 public class UserController {
 
     private final UserService userService;
+    private final HttpServletRequest servletRequest;
 
     @PostMapping("/users/login")
-    public LoginResponse login(HttpServletRequest servletRequest, @RequestBody LoginRequest loginRequest){
+    public LoginResponse login(@RequestBody LoginRequest loginRequest){
         String email = loginRequest.getEmail();
         String password = loginRequest.getPassword();
         UUID uuid = userService.validate(email, password);
@@ -43,17 +45,21 @@ public class UserController {
     }
 
     @GetMapping("/user")
-    public UserVO currentUser(HttpServletRequest servletRequest){
-        return userService.getUserByUUID(getUuidFromSession(servletRequest));
+    public UserVO currentUser(){
+        return userService.getUserByUUID(getUuidFromSession());
     }
 
     @PutMapping("/user")
-    public UserVO updateCurrentUser(HttpServletRequest servletRequest, User me, @RequestBody UpdateUserRequest request) {
-        HttpSession session = servletRequest.getSession();
-        return userService.update((UUID) session.getAttribute("uuid") ,request);
+    public UserVO updateCurrentUser(@RequestBody UpdateUserRequest request) {
+        return userService.update(getUuidFromSession() ,request);
     }
 
-    private UUID getUuidFromSession(HttpServletRequest servletRequest) {
+    @GetMapping("/profiles/{usernameTo}")
+    public ProfileVO getProfile(@PathVariable String usernameTo){
+        return userService.getProfile(getUuidFromSession(), usernameTo);
+    }
+
+    private UUID getUuidFromSession() {
         return (UUID) servletRequest.getSession(false).getAttribute("uuid");
     }
 }

@@ -1,10 +1,4 @@
-CREATE TABLE IF NOT EXISTS profiles (
-    following_id SERIAL NOT NULL,
-    email VARCHAR(45) NOT NULL,
-    following VARCHAR(45) NOT NULL,
-    PRIMARY KEY (following_id),
-    CONSTRAINT fk_user
-        FOREIGN KEY (email)
-            REFERENCES users (email)
-            ON DELETE CASCADE
-            ON UPDATE CASCADE);
+CREATE TABLE IF NOT EXISTS follows (
+    follow_id SERIAL NOT NULL,
+    follower_id uuid NOT NULL,
+    following_id uuid NOT NULL);
