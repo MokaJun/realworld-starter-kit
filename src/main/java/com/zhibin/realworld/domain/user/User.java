@@ -47,6 +47,14 @@ public class User {
         this.followers = new HashSet<>();
     }
 
+    public boolean follow(User to) {
+        return this.followings.add(to);
+    }
+
+    public boolean unfollow(User to) {
+        return this.followings.remove(to);
+    }
+
     public boolean isFollowing(User to) {
         return this.followings.contains(to);
     }

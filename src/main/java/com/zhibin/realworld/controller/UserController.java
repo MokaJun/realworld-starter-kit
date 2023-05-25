@@ -59,6 +59,16 @@ public class UserController {
         return userService.getProfile(getUuidFromSession(), usernameTo);
     }
 
+    @PostMapping("/profiles/{usernameTo}/follow")
+    public ProfileVO follow(@PathVariable String usernameTo){
+        return userService.follow(getUuidFromSession(), usernameTo);
+    }
+
+    @DeleteMapping("/profiles/{usernameTo}/follow")
+    public ProfileVO unfollow(@PathVariable String usernameTo){
+        return userService.unfollow(getUuidFromSession(), usernameTo);
+    }
+
     private UUID getUuidFromSession() {
         return (UUID) servletRequest.getSession(false).getAttribute("uuid");
     }

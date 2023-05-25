@@ -64,4 +64,20 @@ public class UserService {
         User me = userRepository.findById(uuidFromSession).orElseThrow(UserNotExistException::new);
         return new ProfileVO(me, userTo);
     }
+
+    public ProfileVO follow(UUID uuidFromSession, String usernameTo) {
+        User userTo = userRepository.findUserByUsername(usernameTo).orElseThrow(UserNotExistException::new);
+        User me = userRepository.findById(uuidFromSession).orElseThrow(UserNotExistException::new);
+        me.follow(userTo);
+        userRepository.save(me);
+        return new ProfileVO(me, userTo);
+    }
+
+    public ProfileVO unfollow(UUID uuidFromSession, String usernameTo) {
+        User userTo = userRepository.findUserByUsername(usernameTo).orElseThrow(UserNotExistException::new);
+        User me = userRepository.findById(uuidFromSession).orElseThrow(UserNotExistException::new);
+        me.unfollow(userTo);
+        userRepository.save(me);
+        return new ProfileVO(me, userTo);
+    }
 }
