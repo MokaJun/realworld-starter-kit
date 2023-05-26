@@ -36,7 +36,7 @@ public class UserService {
         if (!user.getPassword().equals(password)){
             throw new LoginException(777, "password is wrong");
         }
-        return user.getId();
+        return user.getUserId();
     }
 
     public UserVO getUserByUUID(UUID uuid) {

@@ -1,5 +1,5 @@
 CREATE TABLE IF NOT EXISTS users (
-    id uuid NOT NULL PRIMARY KEY,
+    user_id uuid NOT NULL PRIMARY KEY,
     email VARCHAR(45) NOT NULL unique,
     username VARCHAR(45) NOT NULL unique,
     password VARCHAR(45) NOT NULL,

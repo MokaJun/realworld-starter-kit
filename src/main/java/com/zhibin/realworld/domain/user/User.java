@@ -18,7 +18,7 @@ import java.util.UUID;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID id;
+    private UUID userId;
     private String email;
     private String password;
     @Transient
@@ -31,8 +31,8 @@ public class User {
     @ManyToMany
     @JoinTable(
             name = "follows",
-            joinColumns = @JoinColumn(name = "follower_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "following_id", referencedColumnName = "id"))
+            joinColumns = @JoinColumn(name = "follower_id", referencedColumnName = "userId"),
+            inverseJoinColumns = @JoinColumn(name = "following_id", referencedColumnName = "userId"))
     private Set<User> followings = new HashSet<>();
 
     @Builder.Default
