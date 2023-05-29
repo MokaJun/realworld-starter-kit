@@ -1,5 +1,5 @@
 CREATE TABLE IF NOT EXISTS articles (
-    article_id SERIAL NOT NULL,
+    article_id SERIAL NOT NULL PRIMARY KEY,
     slug VARCHAR(50) NOT NULL,
     title VARCHAR(50) NOT NULL,
     description VARCHAR(100),
